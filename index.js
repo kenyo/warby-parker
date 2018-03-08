@@ -1,4 +1,3 @@
-// with lodash
 const _ = require('lodash')
 const noMatch = 'NO MATCH'
 
@@ -6,7 +5,7 @@ function matchPattern(patterns = [], paths = []) {
   // output.length === paths.length
   return paths
     .map(path =>  findBestPattern(patterns, path))
-    .map(x => (!_.isUndefined(x) && !_.isEqual(x, noMatch)) ? x.join(',') : x)
+    .map(x => !_.isEqual(x, noMatch) ? x.join(',') : x)
 }
 
 function findBestPattern(patterns = [], path = '') {

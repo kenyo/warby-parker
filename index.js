@@ -11,7 +11,6 @@ function matchPattern(patterns = [], paths = []) {
 
 function findBestPattern(patterns = [], path = '') {
   const partsOfPath = path.split('/')
-  console.log('🚨 ', partsOfPath)
   const splitPatterns = patterns.map(x => x.split(','))
 
   // valid patterns are transformed into grades
@@ -26,7 +25,6 @@ function findBestPattern(patterns = [], path = '') {
     // any patterns including null are void
     .filter(x => !_.includes(x, null))
 
-  console.log('MATCHES', matches)
   if (_.isEmpty(matches)) return noMatch
   else {
     const evaluations = matches.reduce((acc, pattern, index) => {
@@ -42,12 +40,6 @@ function findBestPattern(patterns = [], path = '') {
 
     return tiebreaker(evaluations.map(x => x.pattern))
   }
-
-    // .filter(x => !_.isEqual(x.patternScore, Number.MAX_VALUE))
-
-
-  // else return tiebreaker(evaluations.map(x => x.pattern))
-
 }
 
 function evaluatePattern(pattern) {
@@ -63,7 +55,6 @@ function evaluatePattern(pattern) {
   const leftmostCount = firstWildcardIndex !== -1
     ? pattern.length - firstWildcardIndex
     : 0
-  console.log('🤦🏻‍♀️', pattern, _.sum([wildcardCount, leftmostCount]))
   // (3) if tie, prefer next wildcard appearing furthest to the right, etc.
   // (handled in tiebreaker function)
   return _.sum([wildcardCount, leftmostCount])
@@ -92,7 +83,7 @@ function tiebreaker(patterns, maxIndex = 0) {
 
 }
 
-function main() {
+(function main() {
   process.stdin.setEncoding('utf8')
 
   process.stdin.on('readable', () => {
@@ -109,16 +100,12 @@ function main() {
         else if (_.isEqual(_.last(x), '/')) return x.slice(0, -1)
         else return x
       })
-      console.log('paths: ', paths)
 
       const output = matchPattern(patterns, paths)
-      console.log(output)
       return output
     }
   })
-}
-
-main()
+})()
 
 module.exports = {
   matchPattern,

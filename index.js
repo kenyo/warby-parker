@@ -76,7 +76,7 @@ function tiebreaker(patterns, maxIndex = 0) {
     const maxWildcardIndex = _.max(wildcardMap.map(x => x.index))
     const ties = wildcardMap.filter(x => x.index >= maxWildcardIndex)
 
-    // assuming every pattern is unique
+    // assuming every pattern is unique...
     if (ties.length === 1) return ties[0].pattern
     else return tiebreaker(ties.map(x => x.pattern), maxWildcardIndex + 1)
   }
@@ -102,9 +102,10 @@ function tiebreaker(patterns, maxIndex = 0) {
       })
 
       const output = matchPattern(patterns, paths)
-      return output
+      output.forEach(x => console.log(x))
     }
   })
+
 })()
 
 module.exports = {
